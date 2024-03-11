@@ -1,6 +1,5 @@
 #include "EditorApplication.h"
 #include <iostream>
-#include <EditorWindow.h>
 
 
 Hammer::Editor::EditorApplication::EditorApplication()	
@@ -16,20 +15,26 @@ Hammer::Editor::EditorApplication::EditorApplication(const std::string& p_projec
 
 Hammer::Editor::EditorApplication::~EditorApplication()
 {
+	ShutDown();
 }
 
 void Hammer::Editor::EditorApplication::Init()
 {
-	std::cout << "Application init" << std::endl;
-	window = std::make_unique<EditorWindow>(1280,750,"Hammer");
+	Hammer::Core::ServiceLocator::Provide<Hammer::Core::Timer>(new Hammer::Core::Timer());
+	timer = Hammer::Core::ServiceLocator::Resolve< Hammer::Core::Timer>();
+	Hammer::Core::ServiceLocator::Provide<Hammer::Core::IWindow>(new EditorWindow(1280, 750, "Hammer"));
+	window = Hammer::Core::ServiceLocator::Resolve< Hammer::Core::IWindow>();
 }
 
 void Hammer::Editor::EditorApplication::Run()
 {
-	std::cout << "Application Run" << std::endl;
+	timer->Update();
+	std::cout << "time now:" << timer->GetTimeNow() << std::endl;
+	window->OnUpdate();
 }
 
-bool Hammer::Editor::EditorApplication::IsRunning()
+void Hammer::Editor::EditorApplication::ShutDown()
 {
-	return true;
+
 }
+

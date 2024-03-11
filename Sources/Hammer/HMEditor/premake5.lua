@@ -1,7 +1,8 @@
 project "HMEditor"
 	language "C++"
 	cppdialect "C++17"
-	files { "**.h","**.cpp" }
+	files { "**.h","**.cpp","**.c" }
+	 ignoredefaultlibraries { "MSVCRT" }
 
     includedirs {
 		"include",

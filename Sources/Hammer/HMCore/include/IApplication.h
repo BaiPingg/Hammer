@@ -27,5 +27,6 @@ namespace Hammer::Core
 		virtual void Init() = 0;
 		virtual void Run() = 0;
 		virtual	bool IsRunning() = 0;
+		virtual void ShutDown() = 0;
 	};
 }
